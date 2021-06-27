@@ -7,14 +7,13 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    - host: stravatargettracker.dev
-      http:
+    - http:
         paths:
           - path: /test
             backend:
               serviceName: strava-connector-srv
               servicePort: 3000
-          # - path: /?(.*)
-          #   backend:
-          #     serviceName: client-srv
-          #     servicePort: 3000
+          - path: /?(.*)
+            backend:
+              serviceName: strava-connector-srv
+              servicePort: 3000
