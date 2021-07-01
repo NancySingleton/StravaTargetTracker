@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strava-token-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strava-token
+  template:
+    metadata:
+      labels:
+        app: strava-token
+    spec:
+      containers:
+        - name: strava-token
+          image: us.gcr.io/stravatargettracker/strava-token
+          env:
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: strava-client-id-secret
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: strava-client-secret-secret
+                  key: CLIENT_SECRET
+            - name: TEMP_CODE
+              valueFrom:
+                secretKeyRef:
+                  name: strava-temp-code-secret
+                  key: TEMP_CODE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strava-token-srv
+spec:
+  selector:
+    app: strava-token
+  ports:
+    - name: strava-token
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

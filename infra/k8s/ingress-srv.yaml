@@ -11,9 +11,9 @@ spec:
         paths:
           - path: /test
             backend:
-              serviceName: strava-connector-srv
+              serviceName: strava-token-srv
               servicePort: 3000
           - path: /?(.*)
             backend:
-              serviceName: strava-connector-srv
+              serviceName: strava-token-srv
               servicePort: 3000
