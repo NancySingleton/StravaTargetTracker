@@ -20,7 +20,6 @@ const isTokenExpired = (expiryDate) => {
 };
 
 const initialGetToken = async () => {
-  console.log('calling initialGEtToken');
 
   let data = {
     client_id: process.env.CLIENT_ID,
