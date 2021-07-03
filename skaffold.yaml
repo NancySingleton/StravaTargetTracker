@@ -8,8 +8,8 @@ build:
   googleCloudBuild:
     projectId: stravatargettracker
   artifacts:
-    - image: us.gcr.io/stravatargettracker/strava-token
-      context: strava-token
+    - image: us.gcr.io/stravatargettracker/auth
+      context: auth
       docker:
         dockerfile: Dockerfile
       sync:

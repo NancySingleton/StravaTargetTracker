@@ -9,11 +9,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /test
+          - path: /auth/?(.*)
             backend:
-              serviceName: strava-token-srv
-              servicePort: 3000
-          - path: /?(.*)
-            backend:
-              serviceName: strava-token-srv
+              serviceName: auth-srv
               servicePort: 3000
