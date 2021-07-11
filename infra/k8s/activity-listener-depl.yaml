@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activity-listener-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activity-listener
+  template:
+    metadata:
+      labels:
+        app: activity-listener
+    spec:
+      containers:
+        - name: activity-listener
+          image: us.gcr.io/stravatargettracker/activity-listener
+          env:
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: strava-client-id-secret
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: strava-client-secret-secret
+                  key: CLIENT_SECRET
+            - name: GC_IP
+              valueFrom:
+                secretKeyRef:
+                  name: gc-ip
+                  key: GC_IP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: activity-listener-srv
+spec:
+  selector:
+    app: activity-listener
+  ports:
+    - name: activity-listener
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

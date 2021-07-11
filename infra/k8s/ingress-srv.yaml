@@ -17,6 +17,10 @@ spec:
             backend:
               serviceName: activity-backlog-srv
               servicePort: 3000
+          - path: /activity-listener/?(.*)
+            backend:
+              serviceName: activity-listener-srv
+              servicePort: 3000
           - path: /event-bus/?(.*)
             backend:
               serviceName: event-bus-srv

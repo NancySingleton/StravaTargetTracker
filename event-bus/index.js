@@ -22,6 +22,12 @@ app.post('/event-bus/events', (req, res) => {
       console.log(error);
     });
 
+  axios
+    .post('http://activity-listener-srv:3000/activity-listener/events', event)
+    .catch((error) => {
+      console.log(error);
+    });
+
   axios.post('http://auth-srv:3000/auth/events', event).catch((error) => {
     console.log(error);
   });
