@@ -50,7 +50,7 @@ app.get('/activity-listener/', (req, res) => {
 });
 
 app.post('/activity-listener/', (req, res) => {
-  broadcastEvent('ActivityRecieved', { activityId: req.body.objectId });
+  broadcastEvent('ActivityReceived', { activityId: req.body.object_id });
   console.log({ activityId: req.body.object_id });
   res.send('ok', 200);
 });
