@@ -13,6 +13,14 @@ spec:
             backend:
               serviceName: auth-srv
               servicePort: 3000
+          - path: /activity-backlog/?(.*)
+            backend:
+              serviceName: activity-backlog-srv
+              servicePort: 3000
+          - path: /event-bus/?(.*)
+            backend:
+              serviceName: event-bus-srv
+              servicePort: 3000
           - path: /?(.*)
             backend:
               serviceName: client-srv

@@ -3,16 +3,17 @@ import axios from 'axios';
 
 function App() {
   const [token, setToken] = useState('');
+  const [activities, setActivities] = useState({});
   const tempCodeRef = useRef();
 
   function getToken() {
     axios
       .get('auth/token')
-      .then(function (response) {
+      .then((response) => {
         console.log(response.data);
         setToken(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -27,23 +28,33 @@ function App() {
 
     axios
       .post('auth/token', body)
-      .then(function (response) {
+      .then((response) => {
         console.log(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
 
     tempCodeRef.current.value = null;
   }
 
+  function getActivities() {
+    axios
+      .get('activity-backlog/getall')
+      .then((response) => {
+        setActivities(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
-      <div>Hi</div>
       <input ref={tempCodeRef} type="text" />
       <button onClick={createToken}>Enter Temp Code</button>
-      <button onClick={getToken}>Get Token</button>
-      <div>{token}</div>
+      <button onClick={getActivities}>Get Activities</button>
+      <div>{JSON.stringify(activities)}</div>
     </>
   );
 }

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activity-backlog-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activity-backlog
+  template:
+    metadata:
+      labels:
+        app: activity-backlog
+    spec:
+      containers:
+        - name: activity-backlog
+          image: us.gcr.io/stravatargettracker/activity-backlog
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: activity-backlog-srv
+spec:
+  selector:
+    app: activity-backlog
+  ports:
+    - name: activity-backlog
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

@@ -1,3 +1,4 @@
 auth/node_modules
-client/.next
 client/node_modules
+activity-backlog/node_modules
+event-bus/node_modules

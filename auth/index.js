@@ -22,9 +22,15 @@ const getNewToken = async (tempCode) => {
     grant_type: 'authorization_code',
   };
 
-  await axios.post(tokenURL, data).then((response) => {
-    token = response.data;
-  });
+  await axios
+    .post(tokenURL, data)
+    .then(async (response) => {
+      token = response.data;
+      await broadcastEvent('TokenObtained');
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
 };
 
 const isTokenExpired = (expiryDate) => {
@@ -44,21 +50,40 @@ const refreshToken = async () => {
     refresh_token: token.refresh_token,
   };
 
-  await axios.post(tokenURL, data).then((response) => {
-    token = response.data;
-  });
+  await axios
+    .post(tokenURL, data)
+    .then(async (response) => {
+      token = response.data;
+      await broadcastEvent('TokenRefreshed');
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
 
   return access_token;
 };
 
-app.get('/auth/test', (req, res) => {
-  res.send('test response');
+const broadcastEvent = async (type) => {
+  await axios
+    .post('http://event-bus-srv:3000/event-bus/events', {
+      type: type,
+      data: {},
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+};
+
+app.post('/auth/events', (req, res) => {
+  const { type, data } = req.body;
+  console.log('got event');
+  res.send({});
 });
 
 app.post('/auth/token', async (req, res) => {
   const { tempCode } = req.body;
   await getNewToken(tempCode);
-  res.send(token.access_token);
+  res.send({ token: token.access_token });
 });
 
 app.get('/auth/token', (req, res) => {
@@ -71,7 +96,7 @@ app.get('/auth/token', (req, res) => {
       refreshToken();
     }
 
-    res.send(token.access_token);
+    res.send({ token: token.access_token });
   }
 });
 

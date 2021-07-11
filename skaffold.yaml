@@ -24,3 +24,19 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: us.gcr.io/stravatargettracker/activity-backlog
+      context: activity-backlog
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: us.gcr.io/stravatargettracker/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
