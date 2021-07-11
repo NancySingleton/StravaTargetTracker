@@ -21,6 +21,10 @@ spec:
             backend:
               serviceName: event-bus-srv
               servicePort: 3000
+          - path: /activities/?(.*)
+            backend:
+              serviceName: activities-srv
+              servicePort: 3000
           - path: /?(.*)
             backend:
               serviceName: client-srv

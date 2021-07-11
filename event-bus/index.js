@@ -13,7 +13,7 @@ app.get('/events', (req, res) => {
 
 app.post('/event-bus/events', (req, res) => {
   const event = req.body;
-  console.log(event);
+  console.log('Sending', event.type, 'event');
   events.push(event);
 
   axios
@@ -25,6 +25,12 @@ app.post('/event-bus/events', (req, res) => {
   axios.post('http://auth-srv:3000/auth/events', event).catch((error) => {
     console.log(error);
   });
+
+  axios
+    .post('http://activities-srv:3000/activities/events', event)
+    .catch((error) => {
+      console.log(error);
+    });
 
   res.send({ status: 'OK' });
 });

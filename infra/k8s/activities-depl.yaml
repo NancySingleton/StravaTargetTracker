@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activities-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activities
+  template:
+    metadata:
+      labels:
+        app: activities
+    spec:
+      containers:
+        - name: activities
+          image: us.gcr.io/stravatargettracker/activities
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: activities-srv
+spec:
+  selector:
+    app: activities
+  ports:
+    - name: activities
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

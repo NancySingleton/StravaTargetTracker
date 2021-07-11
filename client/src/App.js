@@ -3,7 +3,6 @@ import axios from 'axios';
 
 function App() {
   const [token, setToken] = useState('');
-  const [activities, setActivities] = useState({});
   const tempCodeRef = useRef();
 
   function getToken() {
@@ -38,23 +37,10 @@ function App() {
     tempCodeRef.current.value = null;
   }
 
-  function getActivities() {
-    axios
-      .get('activity-backlog/getall')
-      .then((response) => {
-        setActivities(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   return (
     <>
       <input ref={tempCodeRef} type="text" />
       <button onClick={createToken}>Enter Temp Code</button>
-      <button onClick={getActivities}>Get Activities</button>
-      <div>{JSON.stringify(activities)}</div>
     </>
   );
 }

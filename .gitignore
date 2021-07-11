@@ -1,4 +1,5 @@
 auth/node_modules
 client/node_modules
 activity-backlog/node_modules
+activities/node_modules
 event-bus/node_modules

@@ -11,14 +11,10 @@ const activitiesURL = 'https://www.strava.com/api/v3/activities';
 
 app.post('/activity-backlog/events', async (req, res) => {
   const { type, data } = req.body;
-  console.log('got event');
+  console.log('Received', type, 'event');
   await handleEvent(type, data);
 
   res.send({});
-});
-
-app.get('/activity-backlog/getall', (req, res) => {
-  res.send(activities);
 });
 
 const handleEvent = async (type, data) => {

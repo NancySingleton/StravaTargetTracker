@@ -76,7 +76,7 @@ const broadcastEvent = async (type) => {
 
 app.post('/auth/events', (req, res) => {
   const { type, data } = req.body;
-  console.log('got event');
+  console.log('Received', type, 'event');
   res.send({});
 });
 
