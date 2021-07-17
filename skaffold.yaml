@@ -48,6 +48,14 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: us.gcr.io/stravatargettracker/datasets
+      context: datasets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
     - image: us.gcr.io/stravatargettracker/event-bus
       context: event-bus
       docker:

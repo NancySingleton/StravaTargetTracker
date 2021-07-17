@@ -17,13 +17,26 @@ app.post('/activities/events', async (req, res) => {
 });
 
 const handleEvent = async (type, data) => {
-  if (type === 'BacklogObtained') {
+  if (type === 'ActivityBacklogObtainedBacklog') {
     for (activityId in data.activities) {
       activities[activityId] = data.activities[activityId];
+      broadcastEvent('ActivityListUpdatedActivity', activities[activityId]);
     }
-  } else if (type === 'ActivityReceived') {
+  } else if (type === 'ActivityListenerRecievedEvent') {
     await refreshActivity(data.activityId);
+    broadcastEvent('ActivityListUpdatedActivity', activities[data.activityId]);
   }
+};
+
+const broadcastEvent = async (type, data) => {
+  await axios
+    .post('http://event-bus-srv:3000/event-bus/events', {
+      type: type,
+      data: data,
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
 };
 
 const getToken = async () => {
@@ -69,9 +82,7 @@ const refreshActivity = async (activityId) => {
         start_date_local: start_date_local,
         kudos_count: kudos_count,
       };
-      console.log(activities);
       activities[id] = activity;
-      console.log(activities);
     })
     .catch((error) => {
       console.log(error.response.data);

@@ -70,7 +70,7 @@ const getActivityBacklog = async () => {
     }
     pageNumber += 1;
   }
-  broadcastEvent('BacklogObtained');
+  broadcastEvent('ActivityBacklogObtainedBacklog');
 };
 
 const getPageOfActivities = async (pageNumber) => {

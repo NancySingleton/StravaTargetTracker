@@ -38,6 +38,12 @@ app.post('/event-bus/events', (req, res) => {
       console.log(error);
     });
 
+  axios
+    .post('http://datasets-srv:3000/datasets/events', event)
+    .catch((error) => {
+      console.log(error);
+    });
+
   res.send({ status: 'OK' });
 });
 

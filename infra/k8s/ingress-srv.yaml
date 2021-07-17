@@ -29,6 +29,10 @@ spec:
             backend:
               serviceName: activities-srv
               servicePort: 3000
+          - path: /datasets/?(.*)
+            backend:
+              serviceName: datasets-srv
+              servicePort: 3000
           - path: /?(.*)
             backend:
               serviceName: client-srv

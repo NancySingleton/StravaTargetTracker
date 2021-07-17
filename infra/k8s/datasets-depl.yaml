@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datasets-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datasets
+  template:
+    metadata:
+      labels:
+        app: datasets
+    spec:
+      containers:
+        - name: datasets
+          image: us.gcr.io/stravatargettracker/datasets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: datasets-srv
+spec:
+  selector:
+    app: datasets
+  ports:
+    - name: datasets
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
