@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const App = () => {
   const [token, setToken] = useState('');
-  const [activities, setActivities] = useState({});
+  const [activities, setActivities] = useState([]);
   const tempCodeRef = useRef();
 
   const getToken = () => {

@@ -6,6 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 let subscriptionUrl = 'https://www.strava.com/api/v3/push_subscriptions';
+let callbackUrl = process.env.GC_IP + '/activity-listener';
 
 app.post('/activity-listener/events', (req, res) => {
   const { type, data } = req.body;
@@ -14,22 +15,17 @@ app.post('/activity-listener/events', (req, res) => {
   res.send({});
 });
 
-const subscribe = async () => {
+const subscribe = () => {
   let data = {
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
-    callback_url: process.env.GC_IP + 'activity-listener/',
+    callback_url: callbackUrl,
     verify_token: 123,
   };
 
-  await axios
-    .post(subscriptionUrl, data)
-    .then(async (response) => {
-      console.log('ok');
-    })
-    .catch((error) => {
-      console.log(error.response.data);
-    });
+  axios.post(subscriptionUrl, data).catch((error) => {
+    console.log(error.response.data);
+  });
 };
 
 const broadcastEvent = async (type, data) => {
@@ -55,8 +51,8 @@ app.post('/activity-listener/', (req, res) => {
   res.send('ok', 200);
 });
 
-const start = async () => {
-  await subscribe();
+const start = () => {
+  subscribe();
 
   app.listen(3000, () => {
     console.log('Listening on port 3000!');

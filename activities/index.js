@@ -78,8 +78,19 @@ const refreshActivity = async (activityId) => {
     });
 };
 
+const formatActivities = (activities) => {
+  let formattedActivities = [];
+
+  for (activityId in activities) {
+    formattedActivities.push(activities[activityId]);
+  }
+
+  return formattedActivities;
+};
+
 app.get('/activities', (req, res) => {
-  res.send(activities);
+  formattedActivities = formatActivities(activities);
+  res.send(formattedActivities);
 });
 
 app.listen(3000, () => {
