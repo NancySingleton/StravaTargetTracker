@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "dayjs": "^1.10.6",
     "express": "^4.17.1",
     "moment": "^2.29.1",
     "nodemon": "^2.0.12"
